@@ -161,6 +161,7 @@ class PPOTrainer(BaseTrainer):
             lr_scheduler (Optional[`torch.optim.lr_scheduler`]):
                 Learning rate scheduler used for training.
         """
+        print('%s __init__ called', self.__classs__.__name__)
         super().__init__(config)
 
         # initial seed for reproducible experiments

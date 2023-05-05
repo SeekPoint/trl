@@ -107,6 +107,7 @@ class PPOConfig(object):
         seed: Optional[int] = 0,
         optimize_cuda_cache: Optional[bool] = False,
     ):
+        print('%s __init__ called', self.__classs__.__name__)
         self.model_name = model_name
         self.steps = steps
         self.learning_rate = learning_rate

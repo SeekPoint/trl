@@ -31,6 +31,7 @@ class BaseTrainer(PyTorchModelHubMixin):
     """
 
     def __init__(self, config):
+        print('%s __init__ called', self.__classs__.__name__)
         self.config = config
 
     def step(self, *args):

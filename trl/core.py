@@ -238,6 +238,7 @@ class LengthSampler:
     """
 
     def __init__(self, min_value, max_value):
+        print('%s __init__ called min_value is %d, max_value is %d', self.__classs__.__name__, min_value, max_value)
         self.values = list(range(min_value, max_value))
 
     def __call__(self):

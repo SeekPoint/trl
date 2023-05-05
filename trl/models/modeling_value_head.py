@@ -24,6 +24,7 @@ class ValueHead(nn.Module):
     """
 
     def __init__(self, config, **kwargs):
+        print('%s __init__ called', self.__classs__.__name__)
         super().__init__()
         if not hasattr(config, "summary_dropout_prob"):
             summary_dropout_prob = kwargs.pop("summary_dropout_prob", 0.1)
@@ -43,6 +44,7 @@ class ValueHead(nn.Module):
         self.flatten = nn.Flatten()
 
     def forward(self, hidden_states):
+        print('%s forward called', self.__classs__.__name__)
         output = self.dropout(hidden_states)
 
         # For now force upcast in fp32 if needed. Let's keep the
@@ -81,6 +83,7 @@ class AutoModelForCausalLMWithValueHead(PreTrainedModelWrapper):
                 - **"normal"** -- Initializes the weights of the `ValueHead` with a normal distribution.
 
     """
+    print('AutoModelForCausalLMWithValueHead called')
     transformers_parent_class = AutoModelForCausalLM
     lm_head_namings = ["lm_head", "embed_out"]
     supported_args = (
@@ -100,6 +103,7 @@ class AutoModelForCausalLMWithValueHead(PreTrainedModelWrapper):
             kwargs (`dict`, `optional`):
                 Additional keyword arguments, that are passed to the `ValueHead` class.
         """
+        print('%s __init__ called', self.__classs__.__name__)
         super().__init__(pretrained_model)
         v_head_kwargs, _ = self._split_kwargs(kwargs)
 
@@ -123,6 +127,7 @@ class AutoModelForCausalLMWithValueHead(PreTrainedModelWrapper):
                 can contain the `v_head_init_strategy` argument as well as the `v_head_initializer_range`
                 argument.
         """
+        print('%s _init_weights called', self.__classs__.__name__)
         initializer_range = kwargs.pop("v_head_initializer_range", 0.2)
         # random init by default
         init_strategy = kwargs.pop("v_head_init_strategy", None)
@@ -156,6 +161,7 @@ class AutoModelForCausalLMWithValueHead(PreTrainedModelWrapper):
             kwargs (`dict`, `optional`):
                 Additional keyword arguments, that are passed to the wrapped model.
         """
+        print('%s forward called', self.__classs__.__name__)
         kwargs["output_hidden_states"] = True  # this had already been set in the LORA / PEFT examples
 
         base_model_output = self.pretrained_model(
@@ -221,6 +227,7 @@ class AutoModelForCausalLMWithValueHead(PreTrainedModelWrapper):
         by prepending the key with `v_head.`. This function removes the `v_head.` prefix from the
         keys of the value head state dictionary.
         """
+        print('%s post_init called', self.__classs__.__name__)
         for k in list(state_dict.keys()):
             if "v_head." in k:
                 state_dict[k.replace("v_head.", "")] = state_dict.pop(k)
@@ -278,6 +285,7 @@ class AutoModelForSeq2SeqLMWithValueHead(PreTrainedModelWrapper):
     )
 
     def __init__(self, pretrained_model, **kwargs):
+        print('%s __init__ called', self.__classs__.__name__)
         super().__init__(pretrained_model)
         v_head_kwargs, _ = self._split_kwargs(kwargs)
         self.is_encoder_decoder = True
@@ -302,6 +310,7 @@ class AutoModelForSeq2SeqLMWithValueHead(PreTrainedModelWrapper):
         by prepending the key with `v_head.`. This function removes the `v_head.` prefix from the
         keys of the value head state dictionary.
         """
+        print('%s post_init called', self.__classs__.__name__)
         for k in list(state_dict.keys()):
             if "v_head." in k:
                 state_dict[k.replace("v_head.", "")] = state_dict.pop(k)
@@ -375,6 +384,7 @@ class AutoModelForSeq2SeqLMWithValueHead(PreTrainedModelWrapper):
         r"""
         We initialize the weights of the value head.
         """
+        print('%s _init_weights called', self.__classs__.__name__)
         initializer_range = kwargs.pop("v_head_initializer_range", 0.2)
         # random init by default
         init_strategy = kwargs.pop("v_head_init_strategy", None)
@@ -392,6 +402,7 @@ class AutoModelForSeq2SeqLMWithValueHead(PreTrainedModelWrapper):
         attention_mask=None,
         **kwargs,
     ):
+        print('%s forward called', self.__classs__.__name__)
         base_model_output = self.pretrained_model(
             input_ids=input_ids,
             past_key_values=past_key_values,

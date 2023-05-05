@@ -21,6 +21,7 @@ class AdaptiveKLController:
     """
 
     def __init__(self, init_kl_coef, target, horizon):
+        print('%s __init__ called', self.__classs__.__name__)
         self.value = init_kl_coef
         self.target = target
         self.horizon = horizon
@@ -36,6 +37,7 @@ class FixedKLController:
     """Fixed KL controller."""
 
     def __init__(self, kl_coef):
+        print('%s __init__ called-kl_coef is %d', self.__classs__.__name__, kl_coef)
         self.value = kl_coef
 
     def update(self, current, n_steps):

@@ -54,6 +54,7 @@ class PreTrainedModelWrapper(nn.Module):
     )
 
     def __init__(self, pretrained_model=None, **kwargs):
+        print('%s __init__ called', self.__classs__.__name__)
         super().__init__()
         self.pretrained_model = pretrained_model
 
@@ -90,6 +91,7 @@ class PreTrainedModelWrapper(nn.Module):
                 the arguments that are specific to the `transformers.PreTrainedModel`
                 class and the arguments that are specific to trl models.
         """
+        print('%s from_pretrained called', self.__classs__.__name__)
         if kwargs is not None:
             trl_model_args, pretrained_kwargs = cls._split_kwargs(kwargs)
         else:
@@ -284,7 +286,7 @@ def create_reference_model(
     Returns
         `PreTrainedModelWrapper`
     """
-
+    print('%s create_reference_model called', self.__classs__.__name__)
     parameter_names = [n for n, _ in model.named_parameters()]
     ref_model = deepcopy(model)
 
